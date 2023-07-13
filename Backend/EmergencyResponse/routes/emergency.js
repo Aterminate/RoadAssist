@@ -42,6 +42,19 @@ router.post('/create', async (req, res) => {
   }
 
 });
+// fetch all requests data
+router.get('/all', async (req, res) => {
+  try {
+    const emergencies = await EmergencyModel.find();
+    res.status(200).json(emergencies);
+  } catch (error) {
+    console.error('Error fetching emergencies:', error.message);
+    res.status(500).json({
+      error: 'An error occurred while fetching emergencies'
+    });
+  }
+});
+
 // test
 router.get('/', async (req, res) => {
   console.log("Emergency response get api ");

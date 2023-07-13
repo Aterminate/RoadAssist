@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 
 export interface NavigationItem {
   id: string;
@@ -27,7 +28,7 @@ export interface Navigation extends NavigationItem {
 const NavigationItems = [
   {
     id: 'dashboard',
-    title: 'Dashboard',
+    title: 'User Dashboard',
     type: 'group',
     icon: 'icon-navigation',
     children: [
@@ -42,38 +43,6 @@ const NavigationItems = [
       }
     ]
   },
- /*  {
-    id: 'page',
-    title: 'Pages',
-    type: 'group',
-    icon: 'icon-navigation',
-    children: [
-      {
-        id: 'Authentication',
-        title: 'Authentication',
-        type: 'collapse',
-        icon: 'ti ti-key',
-        children: [
-          {
-            id: 'login',
-            title: 'Login',
-            type: 'item',
-            url: '/guest/login',
-            target: true,
-            breadcrumbs: false
-          },
-          {
-            id: 'register',
-            title: 'Register',
-            type: 'item',
-            url: '/guest/register',
-            target: true,
-            breadcrumbs: false
-          }
-        ]
-      }
-    ]
-  }, */
   {
     id: 'elements',
     title: 'Profile',
@@ -95,50 +64,78 @@ const NavigationItems = [
         classes: 'nav-item',
         url: '/emergency',
         icon: 'ti ti-car'
-      },
-     /*  {
-        id: 'tabler',
-        title: 'Tabler',
-        type: 'item',
-        classes: 'nav-item',
-        url: 'https://tabler-icons.io/',
-        icon: 'ti ti-plant-2',
-        target: true,
-        external: true
-      } */
+      }
     ]
-  },
-  /* {
-    id: 'other',
-    title: 'Other',
+  }
+];
+const NavigationItems1 = [
+  {
+    id: 'dashboard',
+    title: 'Admin Dashboard',
     type: 'group',
     icon: 'icon-navigation',
     children: [
       {
-        id: 'sample-page',
-        title: 'Sample Page',
-        type: 'item',
-        url: '/sample-page',
-        classes: 'nav-item',
-        icon: 'ti ti-brand-chrome'
-      },
-      {
-        id: 'document',
-        title: 'Document',
+        id: 'default',
+        title: 'Default',
         type: 'item',
         classes: 'nav-item',
-        url: 'https://codedthemes.gitbook.io/berry-angular/',
-        icon: 'ti ti-vocabulary',
-        target: true,
-        external: true
+        url: '/default',
+        icon: 'ti ti-dashboard',
+        breadcrumbs: false
       }
     ]
-  } */
+  },
+  {
+    id: 'elements',
+    title: 'Management',
+    type: 'group',
+    icon: 'icon-navigation',
+    children: [
+      {
+        id: 'color',
+        title: 'Emergency Requests',
+        type: 'item',
+        classes: 'nav-item',
+        url: '/typography',
+        icon: 'ti ti-car'
+      },
+      /*  {
+        id: 'color',
+        title: 'Emergency',
+        type: 'item',
+        classes: 'nav-item',
+        url: '/emergency',
+        icon: 'ti ti-car'
+      } */
+    ]
+  }
 ];
 
 @Injectable()
 export class NavigationItem {
+  constructor(private cookieService: CookieService) {}
   get() {
-    return NavigationItems;
+    const userRole = this.getUserRoleFromCookie();
+
+    // Return different sets of navigation items based on the user's role
+    if (userRole === 'admin') {
+      return NavigationItems1;
+    } else if (userRole === 'Driver') {
+      console.log('display user role',userRole);
+      return NavigationItems;
+    }
+    else{}
+
+    // Return a default set of navigation items if the user's role is not recognized
+    return [];
+  }
+  private getUserRoleFromCookie(): string {
+    const userData = this.cookieService.get('user');
+    if (userData) {
+      const user = JSON.parse(userData);
+      return user.role;
+    }
+    return '';
   }
 }
