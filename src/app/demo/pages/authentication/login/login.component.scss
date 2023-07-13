@@ -1,0 +1,17 @@
+img.logo {
+    width: 65%;
+}
+.btn-secondary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #df5e12;
+    --bs-btn-border-color: #df5e12;
+}
+button.btn.btn-secondary.p-2:hover {
+    background-color: black;
+}
+.text-secondary {
+    color: #e9820b !important;
+}
+.text-danger {
+    color: red;
+}

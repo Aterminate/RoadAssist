@@ -1,0 +1,42 @@
+<div class="row">
+  <!-- [ Typography ] start -->
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-header">
+        <h5>Add Vehicle Info </h5>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="vehicleForm" (ngSubmit)="onSubmit()">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="make" formControlName="make" required />
+            <label for="make">Make</label>
+            <div *ngIf="vehicleForm.get('make').invalid && vehicleForm.get('make').touched || submitted" class="text-danger">
+              <div *ngIf="vehicleForm.get('make').hasError('required')">Make is required.</div>
+            </div>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="model" formControlName="model" required />
+            <label for="model">Model</label>
+            <div *ngIf="vehicleForm.get('model').invalid && vehicleForm.get('model').touched" class="text-danger">
+              <div *ngIf="vehicleForm.get('model').hasError('required')">Model is required.</div>
+            </div>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="number" class="form-control" id="year" formControlName="year" required />
+            <label for="year">Year</label>
+            <div *ngIf="vehicleForm.get('year').invalid && vehicleForm.get('year').touched" class="text-danger">
+              <div *ngIf="vehicleForm.get('year').hasError('required')">Year is required.</div>
+            </div>
+          </div>
+          <!-- Other properties related to the vehicle can be added here -->
+          <div class="d-grid mt-4">
+            <button type="submit" class="btn btn-secondary">Create Vehicle</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+  <!-- [ Typography ] end -->
+</div>

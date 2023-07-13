@@ -1,0 +1,63 @@
+<div class="row">
+  <div class="col-sm-12">
+    <div class="card">
+      <div class="card-header">
+        <h5>Add Emergency Info</h5>
+      </div>
+      <div class="card-body">
+        <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+        <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+        <form [formGroup]="emergencyForm" (ngSubmit)="onSubmit()">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="callerName" formControlName="callerName" required />
+            <label for="callerName">Caller Name</label>
+            <div *ngIf="emergencyForm.get('callerName').invalid && emergencyForm.get('callerName').touched || submitted" class="text-danger">
+              <div *ngIf="emergencyForm.get('callerName').hasError('required')">Caller Name is required.</div>
+            </div>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="phoneNumber" formControlName="phoneNumber" required />
+            <label for="phoneNumber">Phone Number</label>
+            <div *ngIf="emergencyForm.get('phoneNumber').invalid && emergencyForm.get('phoneNumber').touched" class="text-danger">
+              <div *ngIf="emergencyForm.get('phoneNumber').hasError('required')">Phone Number is required.</div>
+            </div>
+          </div>
+          <div class="form-floating mb-3">
+            <select class="form-select" id="emergencyType" formControlName="emergencyType" required>
+              <option value="">Select Emergency Type</option>
+              <option value="Flat tire">Flat tire</option>
+              <option value="Battery jump-start">Battery jump-start</option>
+              <option value="Fuel delivery">Fuel delivery</option>
+              <option value="Lockout/Key assistance">Lockout/Key assistance</option>
+              <option value="Mechanical breakdown">Mechanical breakdown</option>
+              <option value="Towing service">Towing service</option>
+              <option value="Accident assistance">Accident assistance</option>
+              <option value="Roadside assistance">Roadside assistance</option>
+            </select>
+            <label for="emergencyType">Emergency Type</label>
+            <div *ngIf="emergencyForm.get('emergencyType').invalid && emergencyForm.get('emergencyType').touched" class="text-danger">
+              <div *ngIf="emergencyForm.get('emergencyType').hasError('required')">Emergency Type is required.</div>
+            </div>
+          </div>
+
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="location" formControlName="location" required />
+            <label for="location">Location</label>
+            <div *ngIf="emergencyForm.get('location').invalid && emergencyForm.get('location').touched" class="text-danger">
+              <div *ngIf="emergencyForm.get('location').hasError('required')">Location is required.</div>
+            </div>
+          </div>
+          <!-- Additional fields can be added here if needed -->
+
+          <div class="d-grid mt-4">
+            <button type="button" class="btn btn-primary" (click)="getCurrentLocation()">Get Current Location</button>
+          </div>
+
+          <div class="d-grid mt-4">
+            <button type="submit" class="btn btn-secondary">Create Emergency</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

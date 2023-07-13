@@ -1,0 +1,65 @@
+<div class="auth-main">
+  <div class="auth-wrapper v3">
+    <div class="auth-form">
+      <div class="card mt-5">
+        <div class="card-body">
+          <a href="javascript:" class="d-flex justify-content-center mt-3">
+            <img class="logo" src="assets/images/iroad-logo.png" />
+          </a>
+          <div class="row">
+            <div class="d-flex justify-content-center">
+              <div class="auth-header">
+                <h2 class="text-secondary mt-5"><b>Sign up</b></h2>
+              </div>
+            </div>
+          </div>
+          <!-- Signup Form -->
+
+          <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+          <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+          <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="floatingInput" placeholder="Example" formControlName="name" required />
+                  <label for="floatingInput">Name</label>
+                  <div *ngIf="signupForm.get('name').invalid && signupForm.get('name').touched" class="text-danger">Name is required.</div>
+                </div>
+              </div>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" formControlName="email" required/>
+              <label for="floatingInput">Email Address / Username</label>
+              <div *ngIf="signupForm.get('email').invalid && signupForm.get('email').touched || submitted" class="text-danger">
+                <div *ngIf="signupForm.get('email').hasError('required')">Email is required.</div>
+              </div>
+
+            </div>
+            <div class="form-floating mb-3">
+              <input type="password" class="form-control" id="floatingInput" placeholder="name@example.com" formControlName="password" required/>
+              <label for="floatingInput">Password</label>
+              <div *ngIf="signupForm.get('password').invalid && signupForm.get('password').touched" class="text-danger">
+                <div *ngIf="signupForm.get('password').errors['required']" >Password is required.</div>
+                <div *ngIf="signupForm.get('password').errors['minlength']">Password should have at least 6 characters.</div>
+              </div>
+            </div>
+            <div class="form-check mt-3">
+              <input class="form-check-input input-primary" type="checkbox" id="customCheckc1" checked="" />
+              <label class="form-check-label" for="customCheckc1">
+                <h5>Agree with <span>Terms & Condition.</span></h5>
+              </label>
+            </div>
+            <div class="d-grid mt-4">
+              <button type="submit" class="btn btn-secondary p-2">Sign Up</button>
+            </div>
+          </form>
+
+          <hr />
+          <h5 class="d-flex justify-content-center">
+            <a [routerLink]="['/guest/login']"> Already have an account? </a>
+          </h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
