@@ -1,6 +1,7 @@
 // Angular Import
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CookieService } from 'ngx-cookie-service';
 
 // project import
 import { SharedModule } from 'src/app/theme/shared/shared.module';
@@ -54,9 +55,9 @@ export default class DefaultComponent {
   monthChart: any;
   yearChart: any;
   colorChart = ['#673ab7'];
-
+  userRole = '';
   // Constructor
-  constructor() {
+  constructor( private cookieService: CookieService) {
     this.chartOptions = {
       series: [
         {
@@ -142,6 +143,17 @@ export default class DefaultComponent {
 
   // Life cycle events
   ngOnInit(): void {
+    const userData = this.cookieService.get('user');
+    if (userData) {
+      // Cookie data exists
+      const user = JSON.parse(userData);
+      this.userRole = user.role;
+      console.log(user);
+      // Perform further actions with the user data
+    } else {
+      // Cookie data does not exist
+      // Handle the absence of cookie data
+    }
     setTimeout(() => {
       this.monthChart = new ApexCharts(document.querySelector('#tab-chart-1'), this.monthOptions);
       this.monthChart.render();
@@ -167,7 +179,7 @@ export default class DefaultComponent {
 
   ListGroup = [
     {
-      name: 'Bajaj Finery',
+      name: 'Roadside Services offer',
       profit: '10% Profit',
       invest: '$1839.00',
       bgColor: 'bg-light-success',
@@ -175,7 +187,7 @@ export default class DefaultComponent {
       color: 'text-success'
     },
     {
-      name: 'TTML',
+      name: 'towing',
       profit: '10% Loss',
       invest: '$100.00',
       bgColor: 'bg-light-danger',
@@ -183,7 +195,7 @@ export default class DefaultComponent {
       color: 'text-danger'
     },
     {
-      name: 'Reliance',
+      name: 'fuel delivery',
       profit: '10% Profit',
       invest: '$200.00',
       bgColor: 'bg-light-success',
@@ -191,7 +203,7 @@ export default class DefaultComponent {
       color: 'text-success'
     },
     {
-      name: 'ATGL',
+      name: 'tire change',
       profit: '10% Loss',
       invest: '$189.00',
       bgColor: 'bg-light-danger',
@@ -199,7 +211,7 @@ export default class DefaultComponent {
       color: 'text-danger'
     },
     {
-      name: 'Stolon',
+      name: 'locksmith services',
       profit: '10% Profit',
       invest: '$210.00',
       bgColor: 'bg-light-success',
