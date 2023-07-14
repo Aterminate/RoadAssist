@@ -5,25 +5,25 @@ const Repair  = require('../models/repair');
 
 // create a new repair
 router.post('/repair/create', async (req, res) => {
-  const { vehicle_id, repair_type, repair_cost, maintenance_schedule } = req.body;
+  const { repair_type, repair_cost, maintenance_schedule } = req.body;
 
   // Check if all required fields are present
-  if (!vehicle_id || !repair_type || !repair_cost || !maintenance_schedule) {
+  if (!repair_type || !repair_cost || !maintenance_schedule) {
     return res.status(400).json({ error: 'Missing required fields' });
   }
 
   try {
     // Fetch the vehicle by ID
-    const vehicle = await Vehicle.findById(vehicle_id);
+    /* const vehicle = await Vehicle.findById(vehicle_id);
 
     // Check if the vehicle exists
     if (!vehicle) {
       return res.status(404).json({ error: 'Vehicle not found' });
-    }
+    } */
 
     // Create a new repair record
     const newRepair = await Repair.create({
-      vehicle: vehicle._id,
+      //vehicle: vehicle._id,
       repair_type,
       repair_cost,
       maintenance_schedule
